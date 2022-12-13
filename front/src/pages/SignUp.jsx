@@ -1,23 +1,27 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import bookAPI from "../services/bookAPI"
+import api from "../services/api";
 
 function SignUp() {
-  const [email, setEmail] = useState("")
-  const [name, setName] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleForm = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    bookAPI
+    api
       .post("/api/user", { email, name, password })
       .then((res) => navigate("/login"))
-      .catch((err) => console.log(err))
-  }
+      .catch((err) => {
+        setError(err.response.data);
+        console.log(err);
+      });
+  };
 
   return (
     <form
@@ -58,11 +62,12 @@ function SignUp() {
           id="password"
         />
       </div>
+      {error ? <p style={{color: "red"}}>{error}</p> : null}
       <button type="submit" className="btn btn-primary">
         Register
       </button>
     </form>
-  )
+  );
 }
 
-export default SignUp
+export default SignUp;

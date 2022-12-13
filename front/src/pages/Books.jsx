@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import bookAPI from "../services/bookAPI"
+import api from "../services/api"
 
 import Book from "../components/Book"
 
@@ -7,7 +7,7 @@ function Books() {
   const [books, setBooks] = useState([])
 
   useEffect(() => {
-    bookAPI
+    api
       .get("/api/book")
       .then((res) => setBooks(res.data))
       .catch((err) => console.error(err.message))

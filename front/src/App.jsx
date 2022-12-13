@@ -7,6 +7,8 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import SignUp from "./pages/SignUp"
 import Books from "./pages/Books"
+import ChangePassword from "./pages/ChangePassword"
+import ForgetPassword from "./pages/ForgetPassword"
 
 import { CurrentUserContextProvider } from "./contexts/userContext"
 
@@ -19,6 +21,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signUp" element={<SignUp />} />
+          <Route path="/change" element={<ChangePassword />} />
+          <Route path="/forget" element={<ForgetPassword />} />
           <Route path="/books" element={<Books />} />
         </Routes>
       </CurrentUserContextProvider>

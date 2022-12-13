@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useContext } from "react"
 
-import bookAPI from "../services/bookAPI"
+import api from "../services/api"
 
 import CurrentUserContext from "../contexts/userContext"
 
@@ -11,7 +11,7 @@ function Header() {
   const navigate = useNavigate()
 
   const handleDisconnection = () => {
-    bookAPI
+    api
       .get("/api/auth/logout")
       .then(() => {
         localStorage.clear()

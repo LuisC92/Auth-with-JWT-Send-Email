@@ -1,10 +1,8 @@
 const express = require("express")
+require("dotenv").config()
 const cors = require("cors")
 const cookieParser = require("cookie-parser")
-
-const auth = require("./middlewares/auth")
-
-require("dotenv").config()
+const {setUpRoutes} = require("./routes/index")
 
 const app = express()
 
@@ -18,24 +16,6 @@ app.use(
   })
 )
 
-const router = express.Router()
-
-const bookRoutes = require("./routes/bookRoutes")
-const userRoutes = require("./routes/userRoutes")
-const authRoutes = require("./routes/authRoutes")
-const passwordRoutes = require("./routes/passwordRoutes")
-
-
-router.use("/book", auth, bookRoutes)
-router.use("/user", userRoutes)
-router.use("/auth", authRoutes)
-router.use("/password", passwordRoutes)
-
-
-app.use("/api", router)
-
-app.get("/*", (req, res) => {
-  res.status(404).send({ message: "Not found !" })
-})
+setUpRoutes(app)
 
 module.exports = app

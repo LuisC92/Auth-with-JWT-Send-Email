@@ -1,23 +1,28 @@
 const mailer = require('./mailer');
-const templateHTML = require('./template.html')
+const ejs = require('ejs');
 
-exports.sendEmail = (email, subject, content) =>{
+exports.sendEmail = (receiver, subject, name, id) =>{
 
-    mailer.sendMail(
-        {
+  const frontend = process.env.APP_FRONTEND+"/change"
+
+  ejs.renderFile(__dirname + '/templates/body.ejs', { name, frontend, id }, (err, data) => {
+
+    if (err) {
+      console.log(err);
+    } else {
+      const mailOptions = {
           from: process.env.SMTP_USER,
-          to: email,
+          to: receiver,
           subject: subject,
-          text: content,
-            html: templateHTML,
-        },
-        (err, info) => {
-          if (err) console.error(err);
-          else console.log(info);
+          html: data
         }
-      );
-
-
-
-
+        
+      mailer.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        console.log('Message sent: %s', info);
+      });
+    }
+  });
 }
