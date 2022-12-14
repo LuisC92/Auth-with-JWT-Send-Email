@@ -1,9 +1,7 @@
-const express = require("express")
+const notFoundRouter = require("express").Router()
 
 const notFoundController = require("../controllers/notFoundController")
 
-const router = express.Router()
+notFoundRouter.get("/", notFoundController.notFound)
 
-router.get("/", notFoundController.notFound)
-
-module.exports = router
+module.exports = notFoundRouter
